@@ -18,28 +18,9 @@ import time
 import csv
 
 #######################################
-# define some time variables
-# Used for searching snoTEL data
-#######################################
-with open ("LIST_START.csv") as myfile:
-    startfile = myfile.read().split('\n')	#Read list containing the end of the state data time-series, which is = to start of the simulation
-
-with open ("LIST_END.csv") as myfile:
-    endfile = myfile.read().split('\n')	#Read list containing the end of the state data time-series, which is = to start of the simulation
-
-timedata = pd.read_csv('LIST_TIME.csv', sep=',') # read in general information about the start and end of the simulation period
-
-month = timedata['month'].values[:]
-startm = timedata['startm'].values[:]
-starty = timedata['starty'].values[:]
-endy = timedata['endy'].values[:]
-endd = timedata['endd'].values[:] 
-endm = timedata['endm'].values[:] 
-
-#######################################
 # iterate through months
 #######################################
-tf=13			#number of months to simulate 
+tf=1			#number of time periods to simulate 
 for o in range(tf):
 
 	#######################################
@@ -57,10 +38,9 @@ for o in range(tf):
 	# Used for searching snoTEL data
 	# Used 90 days before simulation period
 	#######################################
-	telstart=str(startfile[o])
-	telend=str(endfile[o])
-# 	telstart='2017-08-01'
-# 	telend='2017-09-01'
+	telstart='2017-01-01'
+	telend='2018-09-01'
+ 
 	#######################################
 	# IMOPORT .csv files and find time .
 	#######################################
@@ -99,11 +79,9 @@ for o in range(tf):
 		# netCDF creation
 		#######################################
 		outfile=outputfile[z]
-		outfile+='.'
-		outfile+=str(starty[o])
-		outfile+='.'
-		outfile+=str(startm[o])
-		outfile+='.nc'
+# 		outfile+='.'
+# 		outfile+=str(telstart)
+# 		outfile+='.nc'
 		
 		ncid = nc4.Dataset(outfile, "w", format="NETCDF4")
 
@@ -164,7 +142,6 @@ for o in range(tf):
 		# Write data
 		area_varid[:] = 1
 
-
 		####################################### Variables: Latitude & Longitude
 		lon_varid = ncid.createVariable('lon','d',('lon',))
 		lat_varid = ncid.createVariable('lat','d',('lat',))
@@ -176,18 +153,8 @@ for o in range(tf):
 		lon_varid.value          = 'NaN'
 	
 		# Write data
-	
-		lat1 = [30.0312500000000, 30.0937500000000, 30.1562500000000, 30.2187500000000, 30.2812500000000, 30.3437500000000, 30.4062500000000, 30.4687500000000, 30.5312500000000]	
-		lon1 = [-100.031250000000, -99.9687500000000, -99.9062500000000, -99.8437500000000, -99.7812500000000, -99.7187500000000, -99.6562500000000, -99.5937500000000, -99.5312500000000]
-	
-		length_lon=len(lon1)
-		for i in range(length_lon): 
-			lat1[i] = lat-(0.001*i)
-			lon1[i] = lon-(0.001*i)
-	
 		lat_varid[:] = lat
 		lon_varid[:] = lon
-
 
 		####################################### Header 
 		ncid.License     = 'The file was created by C.Hart, https://github.com/ChristianHart2019'

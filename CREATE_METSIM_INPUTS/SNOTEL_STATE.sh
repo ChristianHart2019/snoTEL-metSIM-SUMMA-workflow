@@ -19,31 +19,15 @@ import time
 import csv
 
 #######################################
-# define some time variables
-# Used for searching snoTEL data
+# iterate through time periods
 #######################################
-with open ("LIST_START.csv") as myfile:
-    startfile = myfile.read().split('\n')	#Read list containing the end of the state data time-series, which is = to start of the simulation
-
-timedata = pd.read_csv('LIST_TIME.csv', sep=',') # read in general information about the start and end of the simulation period
-
-month = timedata['month'].values[:]
-startm = timedata['startm'].values[:]
-starty = timedata['starty'].values[:]
-endd = timedata['endd'].values[:] 
-endm = timedata['endm'].values[:] 
-#######################################
-# iterate through months
-#######################################
-tf=13
+tf=1
 for o in range(tf):
-	startdate = date(1900,1,1)
-	date1=date(starty[o],startm[o],1)
+	startdate = date(2016,10,3)
+# 	date1=date(starty[o],startm[o],1)
+	date1=date(2017,1,1)
 	delta = timedelta(90)
 	offset = str(date1 - delta) 
-	
-	telstart=offset	
-	telend=startfile[o]
 
 	#######################################
 	# read in the names of files to format
@@ -59,8 +43,8 @@ for o in range(tf):
 	# define some time variables
 	# Used for searching snoTEL data
 	#######################################
-	telstart='2017-05-03'
-	telend='2017-08-01'
+	telstart='2016-10-03'
+	telend='2017-01-01'
 
 	#######################################
 	# IMOPORT .csv files and find time .
@@ -91,19 +75,35 @@ for o in range(tf):
 		lat = data['latitude'].values[1]
 		elev = data['elev'].values[1]
 		swe = data['snow_water_equivalent'].values[start:finish]
+		
 		t_min = data['temperature_min'].values[start:finish]
+		NaNs = np.isnan(t_min)
+		length_NaNs=len(NaNs)
+		for i in range(length_NaNs):
+			nan = NaNs[i]
+			if nan:
+				t_min[i]=t_min[i-1]	
+		
 		t_max = data['temperature_max'].values[start:finish]
+		NaNs = np.isnan(t_max)
+		length_NaNs=len(NaNs)
+		for i in range(length_NaNs):
+			nan = NaNs[i]
+			if nan:
+				t_max[i]=t_max[i-1]
+		
 		prec = data['precipitation'].values[start:finish]
+		NaNs = np.isnan(prec)
+		length_NaNs=len(NaNs)
+		for i in range(length_NaNs):
+			nan = NaNs[i]
+			if nan:
+				prec[i]=prec[i-1]
 
 		#######################################
 		# netCDF creation
 		#######################################
 		outfile=outputfile[z]
-		outfile+='.'
-		outfile+=str(starty[o])
-		outfile+='.'
-		outfile+=str(startm[o])
-		outfile+='.nc'
 		
 		ncid = nc4.Dataset(outfile, "w", format="NETCDF4")
 
@@ -117,7 +117,7 @@ for o in range(tf):
 		time2 = [i for i in range(length_time)]
 
 		# Attributes
-		time_varid.units         = 'days since 1949-10-03 00:00:00'
+		time_varid.units         = 'days since 2016-10-03 00:00:00'
 		time_varid.calendar      = 'proleptic_gregorian'
 
 		# Write data
@@ -137,15 +137,7 @@ for o in range(tf):
 		lon_varid.units          = 'degrees_east'
 		lat_varid.axis           = 'Y'
 		lon_varid.axis           = 'X'
-	
-		lat1 = [30.0312500000000, 30.0937500000000, 30.1562500000000, 30.2187500000000, 30.2812500000000, 30.3437500000000, 30.4062500000000, 30.4687500000000, 30.5312500000000]	
-		lon1 = [-100.031250000000, -99.9687500000000, -99.9062500000000, -99.8437500000000, -99.7812500000000, -99.7187500000000, -99.6562500000000, -99.5937500000000, -99.5312500000000]
-	
-		length_lon=len(lon1)
-		for i in range(length_lon): 
-			lat1[i] = lat-(0.001*i)
-			lon1[i] = lon-(0.001*i)
-	
+
 		# Write data
 		lat_varid[:] = lat
 		lon_varid[:] = lon
@@ -158,18 +150,6 @@ for o in range(tf):
 		prec_varid.value        = 'nan'
 
 		# Write data
-		prec_length = len(prec)
-		lat_length = len(lat1)
-		lon_length = len(lon1)
-		
-		PREC = np.zeros((prec_length,lat_length,lon_length))	
-		
-		for i in range(prec_length):
-			for j in range(lat_length):
-				for k in range(lon_length):	
-					PREC[i][j][k]=prec[i]
-
-	# 	prec_varid[:] = PREC
 		prec_varid[:] = prec
 
 		###################################### Variable: Temp minimum
@@ -180,16 +160,6 @@ for o in range(tf):
 		t_min_varid.value        = 'nan'
 
 		# Write data
-		t_min_length = len(t_min)
-	
-		T_MIN = np.zeros((t_min_length,lat_length,lon_length))
-	
-		for i in range(t_min_length):
-			for j in range(lat_length):
-				for k in range(lon_length):	
-					T_MIN[i][j][k]=t_min[i]
-	
-	# 	t_min_varid[:] = T_MIN
 		t_min_varid[:] = t_min
 
 		####################################### Variable: Temp maximum
@@ -200,27 +170,7 @@ for o in range(tf):
 		t_max_varid.value        = 'nan'
 
 		# Write data
-		t_max_length = len(t_max)
-	
-		T_MAX = np.zeros((t_max_length,lat_length,lon_length))
-	# 	
-		for i in range(t_max_length):
-			for j in range(lat_length):
-				for k in range(lon_length):	
-					T_MAX[i][j][k]=t_max[i]
-	
-	# 	t_max_varid[:] = T_MAX
-		t_max_varid[:] = t_min
-
-		####################################### Variable: Snow water equivelent
-	# 	swe_varid = ncid.createVariable('swe','d',('time',))
-	# 
-	# 	# Attributes
-	# 	swe_varid.names         = '_fillvalue'
-	# 	swe_varid.value        = 'nan'
-	# 
-	# 	# Write data
-	# 	swe_varid[:] = swe
+		t_max_varid[:] = t_max
 
 		####################################### Header 
 		ncid.License     = 'The file was created by C.Hart, https://github.com/ChristianHart2019'

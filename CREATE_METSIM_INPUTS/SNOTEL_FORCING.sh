@@ -18,29 +18,11 @@ import netCDF4 as nc4
 import time
 import csv
 
-#######################################
-# define some time variables
-# Used for searching snoTEL data
-#######################################
-with open ("LIST_START.csv") as myfile:
-    startfile = myfile.read().split('\n')	#Read list containing the end of the state data time-series, which is = to start of the simulation
-
-with open ("LIST_END.csv") as myfile:
-    endfile = myfile.read().split('\n')	#Read list containing the end of the state data time-series, which is = to start of the simulation
-
-timedata = pd.read_csv('LIST_TIME.csv', sep=',') # read in general information about the start and end of the simulation period
-
-month = timedata['month'].values[:]
-startm = timedata['startm'].values[:]
-starty = timedata['starty'].values[:]
-endy = timedata['endy'].values[:]
-endd = timedata['endd'].values[:] 
-endm = timedata['endm'].values[:] 
 
 #######################################
-# iterate through months
+# iterate through time periods
 #######################################
-tf=13			#number of months to simulate 
+tf=1			#number of time periods to simulate 
 for o in range(tf):
 
 	#######################################
@@ -58,29 +40,8 @@ for o in range(tf):
 	# Used for searching snoTEL data
 	# must be 1 day longer than the config
 	#######################################
-# 	telstart='2017-08-01'
-# 	telend='2017-09-01'
-
-	telstart=str(startfile[o])
-	telend=str(endfile[o])
-	
-# 	print(telstart)
-# 	print(telend)	
-	# telstart='1950-01-01'
-	# telend='1950-01-31'
-
-	comj = (endd[o]==31)  			#Calculate the number of days in each month and
-	if comj:						#how they correspond to the configuration file
-		endday=1
-		endmonth=2
-	coma = (endd[o]==30)
-	if coma:
-		endday=31
-		endmonth=1
-	comb = (endd[o]==28)
-	if comb:
-		endday=29
-		endmonth=1
+	telstart='2017-01-01'
+	telend='2018-09-01'
 	
 	#######################################
 	# The date range used to declare this variable has to be 1 day
@@ -89,10 +50,8 @@ for o in range(tf):
 	# originally declared in the config file starting in 1950/1/1
 	########################################
 	startdate = date(1900,1,1)
-	date1 = date(1950,1,1)
-	date2 = date(1950,endmonth,endday)
-# 	date1 = date(1950,8,1)
-# 	date2 = date(1950,10,1)
+	date1 = date(2017,1,1)
+	date2 = date(2018,9,1)
 	time1 = (date1-startdate).days		
 	time2 = (date2-startdate).days		# Calculate days since 1900 for the start and end of time-series
 	td=time2-time1						# Calculate length of output data
@@ -118,9 +77,6 @@ for o in range(tf):
 				start=i
 			if comf:							#find end of time-series
 				finish=i;
-			
-		print(start)
-		print(finish)
 				
 		#######################################
 		# extract data from .csv
@@ -133,19 +89,38 @@ for o in range(tf):
 		lat = data['latitude'].values[1]
 		elev = data['elev'].values[1]
 		swe = data['snow_water_equivalent'].values[start:finish]
-		Tmin = data['temperature_min'].values[start:finish]
+		
+		Tmin = data['temperature_min'].values[start:finish]		
+		NaNs = np.isnan(Tmin)
+		length_NaNs=len(NaNs)
+		for i in range(length_NaNs):
+			nan = NaNs[i]
+			if nan:
+				Tmin[i]=Tmin[i-1]		
+		
 		Tmax = data['temperature_max'].values[start:finish]
+		NaNs = np.isnan(Tmax)
+		length_NaNs=len(NaNs)
+		for i in range(length_NaNs):
+			nan = NaNs[i]
+			if nan:
+				Tmax[i]=Tmax[i-1]
+		
 		Prec = data['precipitation'].values[start:finish]
+		NaNs = np.isnan(Prec)
+		length_NaNs=len(NaNs)
+		for i in range(length_NaNs):
+			nan = NaNs[i]
+			if nan:
+				Prec[i]=Prec[i-1]
 
 		#######################################
 		# netCDF creation
 		#######################################
 		outfile=outputfile[z]
-		outfile+='.'
-		outfile+=str(starty[o])
-		outfile+='.'
-		outfile+=str(startm[o])
-		outfile+='.nc'
+# 		outfile+='.'
+# 		outfile+=str(telstart)
+# 		outfile+='.nc'
 		
 		ncid = nc4.Dataset(outfile, "w", format="NETCDF4")
 
@@ -167,14 +142,6 @@ for o in range(tf):
 		lat_varid.axis           = 'Y'
 		lon_varid.axis           = 'X'
 
-		lat1 = [30.0312500000000, 30.0937500000000, 30.1562500000000, 30.2187500000000, 30.2812500000000, 30.3437500000000, 30.4062500000000, 30.4687500000000, 30.5312500000000]	
-		lon1 = [-100.031250000000, -99.9687500000000, -99.9062500000000, -99.8437500000000, -99.7812500000000, -99.7187500000000, -99.6562500000000, -99.5937500000000, -99.5312500000000]
-	
-		length_lon=len(lon1)
-		for i in range(length_lon): 
-			lat1[i] = lat-(0.001*i)
-			lon1[i] = lon-(0.001*i)
-	
 		# Write data
 		lat_varid[:] = lat
 		lon_varid[:] = lon
@@ -207,18 +174,6 @@ for o in range(tf):
 		Prec_varid.long_name        = 'precipitation'
 
 		# Write data
-		Prec_length = len(Prec)
-		lat_length = len(lat1)
-		lon_length = len(lon1)
-		
-		PREC = np.zeros((Prec_length,lat_length,lon_length))	
-		
-		for i in range(Prec_length):
-			for j in range(lat_length):
-				for k in range(lon_length):	
-					PREC[i][j][k]=Prec[i]+0.001		# had to add a small number here to get the correct decimal place
-
-	# 	Prec_varid[:] = PREC
 		Prec_varid[:] = Prec
 		
 		####################################### Variable: Temp maximum
@@ -232,18 +187,6 @@ for o in range(tf):
 		Tmax_varid.long_name        = 'Daily maximum temperature'
 
 		# Write data
-		Tmax_length = len(Tmax)
-		lat_length = len(lat1)
-		lon_length = len(lon1)
-		
-		TMAX = np.zeros((Tmax_length,lat_length,lon_length))	
-		
-		for i in range(Tmax_length):
-			for j in range(lat_length):
-				for k in range(lon_length):	
-					TMAX[i][j][k]=Tmax[i]
-
-	# 	Tmax_varid[:] = TMAX
 		Tmax_varid[:] = Tmax
 		
 		###################################### Variable: Temp minimum
@@ -257,18 +200,6 @@ for o in range(tf):
 		Tmin_varid.long_name        = 'Daily minimum temperature'
 
 		# Write data
-		Tmin_length = len(Tmin)
-		lat_length = len(lat1)
-		lon_length = len(lon1)
-		
-		TMIN = np.zeros((Tmin_length,lat_length,lon_length))	
-		
-		for i in range(Tmin_length):
-			for j in range(lat_length):
-				for k in range(lon_length):	
-					TMIN[i][j][k]=Tmin[i]
-
-	# 	Tmin_varid[:] = TMIN
 		Tmin_varid[:] = Tmin
 
 		####################################### Header 
