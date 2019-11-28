@@ -114,7 +114,12 @@ for o in range(tf):
 			nan = NaNs[i]
 			if nan:
 				Prec[i]=Prec[i-1]
-
+		
+		length_T=len(Tmin)
+		for i in range(length_T):
+			if Tmin[i]>Tmax[i]:
+				Tmax[i]=Tmin[i]+0.5
+			
 		#######################################
 		# netCDF creation
 		#######################################
