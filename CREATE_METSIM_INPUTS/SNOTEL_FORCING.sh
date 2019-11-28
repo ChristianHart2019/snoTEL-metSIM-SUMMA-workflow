@@ -90,6 +90,7 @@ for o in range(tf):
 		elev = data['elev'].values[1]
 		swe = data['snow_water_equivalent'].values[start:finish]
 		
+		#Some data formatting to remove any NaNs and make sure TMAX is > TMIN
 		Tmin = data['temperature_min'].values[start:finish]		
 		NaNs = np.isnan(Tmin)
 		length_NaNs=len(NaNs)
