@@ -1,5 +1,5 @@
 ################################
-### WRITE MetSim Config file ###
+### WRITE MetSim Config file f ###
 ################################
 
 #Declare list of snotel station numbers
