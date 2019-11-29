@@ -12,20 +12,15 @@ $length= @SID;
 for($TT=0; $TT<$length; $TT+=1)
 {			
 $ID=@SID[$TT];
-	
+
+#declare strings for file creation 	
 $name = "submit_";
 $snotel = "snotel_";
 $nc = ".nc";
-$dom = "_domain";
-$sta = "_state";
-$for = "_forcing";
 
+#concatenate strings to set file names
 $file = $snotel . $ID . "_submit.sh";
 $filerun = $snotel . $ID . ".conf";
-
-$domain = $name . $ID . $dom . $nc;
-$state = $name . $ID . $sta . $nc;
-$forcing = $name . $ID . $for . $nc;
 
 open(CODES, ">$file");
 print CODES <<"ENDS";
