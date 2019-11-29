@@ -14,11 +14,11 @@ for($TT=0; $TT<$length; $TT+=1)
 {		
 		
 $ID=@SID[$TT];
-	
+#declare string for file naming	
 $name = "snotel_";
-
+#Concatonate strings for file creation
 $file = $name . $ID . "_submit.sh";
-
+#system executes commmand on computer node -- through shell conventions 
 system("sbatch $file");
 
 }

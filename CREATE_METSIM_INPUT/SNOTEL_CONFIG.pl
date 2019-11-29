@@ -13,7 +13,8 @@ $length= @SID;
 	for($TT=0; $TT<$length; $TT+=1)
 	{			
 	$ID=@SID[$TT];
-		
+	
+	#declare strings for file creation and setting paths	
 	$name = "snotel_";
 	$period = ".";
 	$under = "_";
@@ -21,15 +22,17 @@ $length= @SID;
 	$dom = "_domain";
 	$sta = "_state";
 	$for = "_forcing";
-
+	
+	#concatenate strings to set file names
 	$file = $name . $ID . ".conf";
 	$fileout = $name . $ID;
 	
+	#concatenate strings to set file paths
 	$domain = $name . $ID . $dom . $nc;
 	$state = $name . $ID . $sta . $nc;
 	$forcing = $name . $ID . $for . $nc;
 	
-	#write .conf information to file
+	#write .conf information to file variables written to file are marked with "$"
 	open(CODE, ">$file");
 	print CODE <<"END";
     
