@@ -21,4 +21,4 @@ After a few more minutes, that will finish too. And, the output files will be in
 
 snotel_*_20170101-20180831.nc
 
-Where * is the station number and the two dates are the start and end of the simulation. 
+Where * is the station number, and the two dates are the start and end of the simulation. 
