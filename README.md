@@ -13,5 +13,4 @@ The workflow can be recreated by following the instructions found within the fol
 3)	CREATE_METSIM_INPUTS
 4)	CREATE_SUMMA_FORCING
 5)	CREATE_SUMMA_CONTOLFILES
-6)	RUN_METSIM
-7)	MODEL_EVALUATION
+6)	MODEL_EVALUATION
