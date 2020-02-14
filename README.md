@@ -1,4 +1,5 @@
 # snoTEL-metSIM-SUMMA-workflow
+
 This document a describes a workflow that:
 -	Acquires meteorological data from the USDA’s Snow Telemetry Data Collection Network (snoTEL) and the North American Land Data Assimilation System (NLDAS)
 -	Formats this data for use in forcing metSIM, a metrological simulator that mimics daily forcing data and disaggregates it at a sub-daily time scale.
