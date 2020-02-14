@@ -6,7 +6,7 @@ This document a describes a workflow that:
 -	Creates file control scripts and attribute files for initializing point scale SUMMA runs.
 -	And eventually compares SUMMA model output with snoTEL SWE and snowdepth data
 
-The workflow can be recreated by following the instructions found within the folders. Folders are accessed in the subsequent order:
+The workflow can be recreated by following the instructions found within the folders. The workflow accesses folders in the subsequent order:
 1)	DATA_ACQUISITION
 2)	METSIM_INSALLATION
 3)	CREATE_METSIM_INPUTS
