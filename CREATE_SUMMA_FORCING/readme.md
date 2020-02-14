@@ -1,0 +1,2 @@
+# Create forcing files for SUMMA
+Use the file CREATE_SUMMA_FORCING.sh to format the metSIM reanalysis data and NLDAS wind speed data into a consolidated netCDF SUMMA forcing file. The major operations of this script are converting the time-step from 2000-01-01 00:00:00 to days since 1990-01-01 00:00:00, calculating the specific humidity according to Stull, R. B. (2018), converting units, and adding attributes and meta data to the file. Paths must be specified according to the locations of the metSIM and NLDAS data.
