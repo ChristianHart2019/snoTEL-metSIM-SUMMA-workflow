@@ -9,7 +9,7 @@ This document a describes a workflow that:
 
 The workflow can be recreated by following the instructions found within the folders. The workflow accesses folders in the subsequent order:
 1)	DATA_ACQUISITION
-2)	METSIM_INSALLATION
+2)	METSIM_INSTALLATION
 3)	CREATE_METSIM_INPUTFILES
 4)	CREATE_SUMMA_FORCINGFILES
 5)	CREATE_SUMMA_CONTOLFILES
