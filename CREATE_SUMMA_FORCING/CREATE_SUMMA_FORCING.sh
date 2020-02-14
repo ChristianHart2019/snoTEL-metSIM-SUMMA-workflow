@@ -1,4 +1,3 @@
-
 ############################################################
 ### This script formats output variables from MetSim     ###
 ### and NLDAS netCDF files for use with SUMMA			 ###	
