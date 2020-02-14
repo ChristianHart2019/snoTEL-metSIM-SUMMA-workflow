@@ -30,7 +30,7 @@ for o in range(tf):													# Iterate through these periods
 	#######################################
 	# read in the names of metsim output files
 	#######################################
-	with open ("LIST_METSIM1.csv") as myfile:						# Open list containing names of Metsim-snoTEL simulations
+	with open ("LIST_METSIM.csv") as myfile:						# Open list containing names of Metsim-snoTEL simulations
 		datafile = myfile.read().split('\n')						# Split up original .CSV into rows
 
 	#######################################
