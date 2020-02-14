@@ -4,4 +4,4 @@ You will first have to install R (https://www.r-project.org), programming platfo
 
 ## North American Land Data Assimilation System (NLDAS)
 
-The NLDAS data used in this project was hosted on the University of Saskatchewan’s supercomputer, Plato (https://wiki.usask.ca/display/ARC/Getting+started+on+Plato) under (/datastore/GLOBALWATER/CommonData/NLDAS_SUMMA/). 
+The NLDAS data used in this project was hosted on the University of Saskatchewan’s supercomputer, Plato (https://wiki.usask.ca/display/ARC/Getting+started+on+Plato), under (/datastore/GLOBALWATER/CommonData/NLDAS_SUMMA/). 
