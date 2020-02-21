@@ -1,0 +1,2 @@
+# Create and attributes file that will control parameters in SUMMA runs 
+Use the CREATE_SUMMA_ATTRIBUTES.sh python script to create a set of SUMMA attribute files that are specific to individual snoTEL stations. The size of the attribute file’s dimensions must be the same as that in the snoTEL forcing files. This script extracts data from the original SUMMA data files and ensures that the new information written to file is consistent with the measurement specifications of the snoTEL stations.
