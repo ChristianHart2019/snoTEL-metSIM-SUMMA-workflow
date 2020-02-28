@@ -1,5 +1,5 @@
 # Create files that will control SUMMA runs and output
-Follow instructions according to https://summa.readthedocs.io/en/latest/ and https://github.com/wknoben/summa to install and initalize control scripts for structure for unifying multiple modelling alternatives (SUMMA) (Clark et al., 2015). 
+Follow instructions according to https://summa.readthedocs.io/en/latest/ and https://github.com/wknoben/summa to install and initalize control scripts for (SUMMA) structure for unifying multiple modelling alternatives (Clark et al., 2015). 
 
 
 
