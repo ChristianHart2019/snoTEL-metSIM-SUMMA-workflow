@@ -1,6 +1,4 @@
 # Create files that will control SUMMA runs and output
-Follow instructions according to https://summa.readthedocs.io/en/latest/ and https://github.com/wknoben/summa to install and initalize control scripts for (SUMMA), structure for unifying multiple modelling alternatives (Clark et al., 2015). The SETTINGS-snoTEL folder includes nearly all the files required for performing model simulations of snoTEL site conditions. The folder is missing the meteorological forcing file because of file size restrictions on GitHub. This file can be generated using the script
-
-
+Follow instructions according to https://summa.readthedocs.io/en/latest/ and https://github.com/wknoben/summa to install and initalize control scripts for (SUMMA), structure for unifying multiple modelling alternatives (Clark et al., 2015). The SETTINGS-snoTEL folder includes nearly all the files required for performing model simulations of snoTEL site conditions. The folder is missing the meteorological forcing file because of file size restrictions on GitHub. This file can be generated using the script SNOTEL_SUMMA_FORCING.sh found within the CREATE_SUMMA_FORCINGFILES folder.
 
   Clark, M. P., Nijssen, B., Lundquist, J. D., Kavetski, D., Rupp, D. E., Woods, R. A., ... & Arnold, J. R. (2015). A unified     approach for process‐based hydrologic modeling: 1. Modeling concept. Water Resources Research, 51(4), 2498-2514.
