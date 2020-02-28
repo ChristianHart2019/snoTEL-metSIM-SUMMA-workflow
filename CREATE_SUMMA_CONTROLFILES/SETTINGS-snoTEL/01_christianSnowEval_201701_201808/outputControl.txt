@@ -1,0 +1,38 @@
+! ---------
+! parms
+! ---------
+hruId         
+latitude      
+longitude     
+!
+! ---------
+! forcings
+! ---------
+pptrate                       | timestep   | mean
+airtemp                       | timestep   | mean
+!
+! -------------------------
+! model variables
+! -------------------------
+!
+! WB components (with pptrate)
+scalarRainfall                | timestep   | mean 
+scalarSnowfall                | timestep   | mean 
+scalarTotalET                 | timestep   | mean
+scalarTotalRunoff             | timestep   | mean
+!
+! Snow components
+scalarSWE                     | timestep   | instant
+scalarSnowDepth               | timestep   | instant
+scalarRainPlusMelt            | timestep   | mean 
+scalarSnowSublimation         | timestep   | mean 
+scalarCanopySublimation       | timestep   | mean 
+!
+! EB components
+scalarNetRadiation            | timestep   | mean 
+scalarLatHeatTotal            | timestep   | mean 
+scalarSenHeatTotal            | timestep   | mean 
+
+
+
+

@@ -1,0 +1,25 @@
+'SUMMA_FILE_MANAGER_V1.0'                               						! file manager version
+!
+! file paths
+'/home/cjh458/summa/summa-22-10-2019/SETTINGS/SETTINGS-snoTEL_1/'    			! setting_path
+'/home/cjh458/summa/summa-22-10-2019/SETTINGS/SETTINGS-snoTEL_1/Forcing/'    	! forcing_path in FORCING_FILELIST
+'/home/cjh458/summa/summa-22-10-2019/SETTINGS/SETTINGS-snoTEL_1/Output/'        ! output_path
+!
+! control files
+'01_christianSnowEval_201701_201808/modelDecisions1.txt'         				! decision file relative to SETTINGS_PATH
+[notUsed]                           ! [notUsed] meta_time
+[notUsed]                           ! [notUsed] meta_attr
+[notUsed]                           ! [notUsed] meta_type
+[notUsed]                           ! [notUsed] meta_force
+[notUsed]                           ! [notUsed] meta_localpar
+'01_christianSnowEval_201701_201808/outputControl.txt'          				! OUTPUT_CONTROL relative to SETTINGS_PATH
+[notUsed]                           ! [not used] meta_index
+[notUsed]                           ! [not used] meta_basinpar
+[notUsed]                           ! [not used] meta_basinvar
+'Attributes/snotel_attributes.nc'                     	! local attributes
+'localParamInfo.txt'                ! local parameter info
+'basinParamInfo.txt'                ! basin parameter info
+'01_christianSnowEval_201701_201808/forcingFileList.txt'      					! forcing file list relative to SETTINGS_PATH
+'snotel_initialConditions.nc'       ! initial conditions
+'snotel_trialParams.nc'             ! parameter trials
+'snotel_'                   	    ! output_prefix
