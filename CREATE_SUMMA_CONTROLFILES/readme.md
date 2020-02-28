@@ -1,5 +1,5 @@
 # Create files that will control SUMMA runs and output
-Follow instructions according to https://summa.readthedocs.io/en/latest/ and https://github.com/wknoben/summa to install and initalize control scripts for (SUMMA) structure for unifying multiple modelling alternatives (Clark et al., 2015). 
+Follow instructions according to https://summa.readthedocs.io/en/latest/ and https://github.com/wknoben/summa to install and initalize control scripts for (SUMMA), structure for unifying multiple modelling alternatives (Clark et al., 2015). The SETTINGS-snoTEL folder includes nearly all the files required for performing model simulations of snoTEL site conditions. The folder is missing the meteorological forcing file because of file size restrictions on GitHub. This file can be generated using the script
 
 
 
