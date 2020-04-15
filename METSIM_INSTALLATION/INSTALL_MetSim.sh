@@ -16,7 +16,7 @@ pip install numba --user
 pip install pandas --user
 pip install xarray --user
 
-DOWNLOAD: MetSim form Github
+DOWNLOAD: MetSim from Github
 
 cd MetSim
 python3 setup.py install --user
